@@ -94,7 +94,6 @@ fn filter_input(input: &mut Vec<u8>, options: SpamsumOptions) {
             _ => 0,
         };
         input.drain(0..new_start);
-        input.shrink_to_fit();
     }
     if options.ignore_whitespace {
         // imitating C's isspace(c) (POSIX locale), removing ASCII
@@ -102,6 +101,7 @@ fn filter_input(input: &mut Vec<u8>, options: SpamsumOptions) {
         let whitespaces = [0x20, 0x9, 0xA, 0xB, 0xC, 0xD];
         input.retain(|&c| !whitespaces.contains(&c));
     }
+    input.shrink_to_fit();
 }
 
 fn get_spamsum_with_set_blocksize(
